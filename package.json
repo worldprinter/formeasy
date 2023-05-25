@@ -14,10 +14,10 @@
     "@jscutlery/semver": "^3.0.0",
     "@nx/eslint-plugin": "16.2.2",
     "@nx/jest": "16.2.2",
-    "@nx/js": "^16.2.2",
+    "@nx/js": "16.2.2",
     "@nx/linter": "16.2.2",
-    "@nx/react": "^16.2.2",
-    "@nx/rollup": "^16.2.2",
+    "@nx/react": "16.2.2",
+    "@nx/rollup": "16.2.2",
     "@nx/workspace": "16.2.2",
     "@rollup/plugin-url": "^7.0.0",
     "@svgr/rollup": "^6.1.2",
@@ -55,3 +55,4 @@
     "zustand": "^4.3.8"
   }
 }
+
