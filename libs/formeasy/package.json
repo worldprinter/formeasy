@@ -10,16 +10,12 @@
   },
   "keywords": [
     "react",
-    "next",
-    "nextjs",
-    "ui",
-    "components",
-    "ui-kit",
     "library",
     "frontend",
-    "carousel",
-    "slider",
-    "slick"
+    "hook-form",
+    "form",
+    "form-validation",
+    "form-validation-library"
   ],
   "author": "Worldprinter <worldprinter@qingmu.me>",
   "license": "MIT",
