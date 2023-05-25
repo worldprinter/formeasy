@@ -10,6 +10,7 @@
     "@babel/preset-react": "^7.14.5",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
+    "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
     "@jscutlery/semver": "^3.0.0",
     "@nx/eslint-plugin": "16.2.2",
     "@nx/jest": "16.2.2",
@@ -46,9 +47,11 @@
     "typescript": "~5.0.2"
   },
   "dependencies": {
+    "consola": "^3.1.0",
     "lodash": "^4.17.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zustand": "^4.3.8"
   }
 }
