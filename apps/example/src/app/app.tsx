@@ -185,10 +185,6 @@ const App: React.FC = () => {
                     element={<UseWatchUseFieldArrayNested />}
                 />
                 <Route
-                    path='/test'
-                    element={<Test />}
-                />
-                <Route
                     path='/'
                     element={<Welcome />}
                 />

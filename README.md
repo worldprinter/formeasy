@@ -21,6 +21,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 {
   "reaction": {
     "value": "{{filed.a + 1}}",
+    "b": "{{}}"
   }
 }
 
