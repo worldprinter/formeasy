@@ -39,6 +39,7 @@ import WatchUseFieldArrayNested from '../routers/watchUseFieldArrayNested'
 import Welcome from '../welcome'
 import '../styles.css'
 import FormComponent from '../routers/form'
+import Transform from '../routers/transform'
 
 const App: React.FC = () => {
     return (
@@ -186,7 +187,7 @@ const App: React.FC = () => {
                 />
                 <Route
                     path='/'
-                    element={<Welcome />}
+                    element={<Transform />}
                 />
                 <Route
                     path='/form'

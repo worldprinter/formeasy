@@ -85,6 +85,7 @@ export type UseFormProps<TFieldValues extends FieldValues = FieldValues, TContex
     mode: Mode
     reValidateMode: Exclude<Mode, 'onTouched' | 'all'>
     defaultValues: DefaultValues<TFieldValues> | AsyncDefaultValues<TFieldValues>
+    transform?: TransformOptions<TFieldValues>
     values: TFieldValues
     resetOptions: Parameters<UseFormReset<TFieldValues>>[1]
     resolver: Resolver<TFieldValues, TContext>
@@ -110,6 +111,12 @@ export type FormStateProxy<TFieldValues extends FieldValues = FieldValues> = {
 
 export type ReadFormState = { [K in keyof FormStateProxy]: boolean | 'all' }
 
+export type TransformString = 'string' | 'number' | 'boolean' | 'array'
+
+export type TransformOptions<TFieldValues extends FieldValues> = {
+    [K in keyof TFieldValues]?: ((value: TFieldValues[K]) => any) | TransformString
+}
+
 export type FormState<TFieldValues extends FieldValues> = {
     isDirty: boolean
     isLoading: boolean
@@ -123,6 +130,7 @@ export type FormState<TFieldValues extends FieldValues> = {
     dirtyFields: Partial<Readonly<FieldNamesMarkedBoolean<TFieldValues>>>
     touchedFields: Partial<Readonly<FieldNamesMarkedBoolean<TFieldValues>>>
     errors: FieldErrors<TFieldValues>
+    transform?: TransformOptions<TFieldValues> | undefined
 }
 
 export type KeepStateOptions = Partial<{

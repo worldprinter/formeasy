@@ -17,11 +17,23 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 ### TODO
+1. transform -> int -> string
+```ts
+{
+  "a": {
+    transform: (val) => {
+      return Int(val)
+    }
+  }
+}
+```
+2. expression
 ```ts
 {
   "reaction": {
-    "value": "{{filed.a + 1}}",
-    "b": "{{}}"
+    // onChange ->  value // 
+    "value": "{{field.a + 1}}",
+    "b": "{{field.value / 10}}"
   }
 }
 

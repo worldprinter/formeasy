@@ -1,4 +1,5 @@
 import React from 'react'
+import { isObject } from 'util'
 
 import { createFormControl } from './logic/createFormControl'
 import getProxyFormState from './logic/getProxyFormState'
@@ -7,6 +8,7 @@ import type { FieldValues, FormState, InternalFieldName, UseFormProps, UseFormRe
 import { useSubscribe } from './useSubscribe'
 import deepEqual from './utils/deepEqual'
 import isFunction from './utils/isFunction'
+import isUndefined from './utils/isUndefined'
 
 /**
  * Custom hook to manage the entire form.
@@ -56,6 +58,7 @@ export function useForm<
         touchedFields: {},
         errors: {},
         defaultValues: isFunction(props.defaultValues) ? undefined : props.defaultValues,
+        transform: isUndefined(props.transform) ? undefined : props.transform,
     })
 
     if (!_formControl.current) {
