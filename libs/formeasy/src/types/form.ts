@@ -6,6 +6,7 @@ import type { EventType } from './events'
 import type { FieldArray } from './fieldArray'
 import type { FieldRefs, FieldValue, FieldValues, InternalFieldName } from './fields'
 import type { FieldArrayPath, FieldPath, FieldPathValue, FieldPathValues } from './path'
+import { Reaction } from './reaction'
 import type { Resolver } from './resolvers'
 import type { DeepMap, DeepPartial, Noop } from './utils'
 import type { RegisterOptions } from './validator'
@@ -85,7 +86,6 @@ export type UseFormProps<TFieldValues extends FieldValues = FieldValues, TContex
     mode: Mode
     reValidateMode: Exclude<Mode, 'onTouched' | 'all'>
     defaultValues: DefaultValues<TFieldValues> | AsyncDefaultValues<TFieldValues>
-    transform?: TransformOptions<TFieldValues>
     values: TFieldValues
     resetOptions: Parameters<UseFormReset<TFieldValues>>[1]
     resolver: Resolver<TFieldValues, TContext>
@@ -96,6 +96,8 @@ export type UseFormProps<TFieldValues extends FieldValues = FieldValues, TContex
     progressive: boolean
     criteriaMode: CriteriaMode
     delayError: number
+    transform?: TransformOptions<TFieldValues>
+    reaction?: Reaction<TFieldValues>
 }>
 
 export type FieldNamesMarkedBoolean<TFieldValues extends FieldValues> = DeepMap<DeepPartial<TFieldValues>, boolean>
@@ -130,7 +132,8 @@ export type FormState<TFieldValues extends FieldValues> = {
     dirtyFields: Partial<Readonly<FieldNamesMarkedBoolean<TFieldValues>>>
     touchedFields: Partial<Readonly<FieldNamesMarkedBoolean<TFieldValues>>>
     errors: FieldErrors<TFieldValues>
-    transform?: TransformOptions<TFieldValues> | undefined
+    transform?: TransformOptions<TFieldValues>
+    reaction?: Reaction<TFieldValues>
 }
 
 export type KeepStateOptions = Partial<{

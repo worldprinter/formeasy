@@ -25,5 +25,8 @@
   "homepage": "https://github.com/worldprinter/formeasy",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "type-fest": "^3.11.0"
   }
 }

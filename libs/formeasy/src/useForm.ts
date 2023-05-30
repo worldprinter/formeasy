@@ -59,6 +59,7 @@ export function useForm<
         errors: {},
         defaultValues: isFunction(props.defaultValues) ? undefined : props.defaultValues,
         transform: isUndefined(props.transform) ? undefined : props.transform,
+        reaction: isUndefined(props.reaction) ? undefined : props.reaction,
     })
 
     if (!_formControl.current) {
