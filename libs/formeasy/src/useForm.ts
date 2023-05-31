@@ -1,11 +1,10 @@
 import React from 'react'
-import { isObject } from 'util'
 
-import { createFormControl } from './logic/createFormControl'
+import {createFormControl} from './logic/createFormControl'
 import getProxyFormState from './logic/getProxyFormState'
 import shouldRenderFormState from './logic/shouldRenderFormState'
-import type { FieldValues, FormState, InternalFieldName, UseFormProps, UseFormReturn } from './types'
-import { useSubscribe } from './useSubscribe'
+import type {FieldValues, FormState, InternalFieldName, UseFormProps, UseFormReturn} from './types'
+import {useSubscribe} from './useSubscribe'
 import deepEqual from './utils/deepEqual'
 import isFunction from './utils/isFunction'
 import isUndefined from './utils/isUndefined'
@@ -40,70 +39,70 @@ import isUndefined from './utils/isUndefined'
  * ```
  */
 export function useForm<
-    TFieldValues extends FieldValues = FieldValues,
-    TContext = any,
-    TTransformedValues extends FieldValues | undefined = undefined,
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any,
+  TTransformedValues extends FieldValues | undefined = undefined,
 >(props: UseFormProps<TFieldValues, TContext> = {}): UseFormReturn<TFieldValues, TContext, TTransformedValues> {
-    const _formControl = React.useRef<UseFormReturn<TFieldValues, TContext, TTransformedValues> | undefined>()
-    const [formState, updateFormState] = React.useState<FormState<TFieldValues>>({
-        isDirty: false,
-        isValidating: false,
-        isLoading: isFunction(props.defaultValues),
-        isSubmitted: false,
-        isSubmitting: false,
-        isSubmitSuccessful: false,
-        isValid: false,
-        submitCount: 0,
-        dirtyFields: {},
-        touchedFields: {},
-        errors: {},
-        defaultValues: isFunction(props.defaultValues) ? undefined : props.defaultValues,
-        transform: isUndefined(props.transform) ? undefined : props.transform,
-        reaction: isUndefined(props.reaction) ? undefined : props.reaction,
-    })
+  const _formControl = React.useRef<UseFormReturn<TFieldValues, TContext, TTransformedValues> | undefined>()
+  const [formState, updateFormState] = React.useState<FormState<TFieldValues>>({
+    isDirty: false,
+    isValidating: false,
+    isLoading: isFunction(props.defaultValues),
+    isSubmitted: false,
+    isSubmitting: false,
+    isSubmitSuccessful: false,
+    isValid: false,
+    submitCount: 0,
+    dirtyFields: {},
+    touchedFields: {},
+    errors: {},
+    defaultValues: isFunction(props.defaultValues) ? undefined : props.defaultValues,
+    transform: isUndefined(props.transform) ? undefined : props.transform,
+    reaction: isUndefined(props.reaction) ? undefined : props.reaction,
+  })
 
-    if (!_formControl.current) {
-        _formControl.current = {
-            ...createFormControl(props, () => updateFormState((formState) => ({ ...formState }))),
-            formState,
-        }
+  if (!_formControl.current) {
+    _formControl.current = {
+      ...createFormControl(props, () => updateFormState((formState) => ({...formState}))),
+      formState,
+    }
+  }
+
+  const control = _formControl.current.control
+  control._options = props
+
+  useSubscribe({
+    subject: control._subjects.state,
+    next: (value: Partial<FormState<TFieldValues>> & { name?: InternalFieldName }) => {
+      if (shouldRenderFormState(value, control._proxyFormState, control._updateFormState, true)) {
+        updateFormState({...control._formState})
+      }
+    },
+  })
+
+  React.useEffect(() => {
+    if (props.values && !deepEqual(props.values, control._defaultValues)) {
+      control._reset(props.values, control._options.resetOptions)
+    } else {
+      control._resetDefaultValues()
+    }
+  }, [props.values, control])
+
+  React.useEffect(() => {
+    if (!control._state.mount) {
+      control._updateValid()
+      control._state.mount = true
     }
 
-    const control = _formControl.current.control
-    control._options = props
+    if (control._state.watch) {
+      control._state.watch = false
+      control._subjects.state.next({...control._formState})
+    }
 
-    useSubscribe({
-        subject: control._subjects.state,
-        next: (value: Partial<FormState<TFieldValues>> & { name?: InternalFieldName }) => {
-            if (shouldRenderFormState(value, control._proxyFormState, control._updateFormState, true)) {
-                updateFormState({ ...control._formState })
-            }
-        },
-    })
+    control._removeUnmounted()
+  })
 
-    React.useEffect(() => {
-        if (props.values && !deepEqual(props.values, control._defaultValues)) {
-            control._reset(props.values, control._options.resetOptions)
-        } else {
-            control._resetDefaultValues()
-        }
-    }, [props.values, control])
+  _formControl.current.formState = getProxyFormState(formState, control)
 
-    React.useEffect(() => {
-        if (!control._state.mount) {
-            control._updateValid()
-            control._state.mount = true
-        }
-
-        if (control._state.watch) {
-            control._state.watch = false
-            control._subjects.state.next({ ...control._formState })
-        }
-
-        control._removeUnmounted()
-    })
-
-    _formControl.current.formState = getProxyFormState(formState, control)
-
-    return _formControl.current
+  return _formControl.current
 }
