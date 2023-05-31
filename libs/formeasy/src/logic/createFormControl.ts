@@ -217,6 +217,7 @@ export function createFormControl<TFieldValues extends FieldValues = FieldValues
     shouldSetValues = true,
     shouldUpdateFieldsAndState = true,
   ) => {
+    debugger
     if (args && method) {
       _state.action = true
       if (shouldUpdateFieldsAndState && Array.isArray(get(_fields, name))) {
@@ -830,6 +831,7 @@ export function createFormControl<TFieldValues extends FieldValues = FieldValues
         ...(field && field._f ? field._f : {ref: {name}}),
         name,
         mount: true,
+        show: options.show,
         ...options,
       },
     })
@@ -854,6 +856,7 @@ export function createFormControl<TFieldValues extends FieldValues = FieldValues
         : {}),
       name,
       onChange,
+      show: options.show,
       onBlur: onChange,
       ref: (ref: HTMLInputElement | null): void => {
         if (ref) {

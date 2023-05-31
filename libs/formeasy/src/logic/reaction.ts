@@ -2,6 +2,7 @@
 import type { FieldValues, Reaction, ReactionValue } from '../types'
 import { get, set } from '../utils'
 import { getWords } from '../utils/getWords'
+import {getExpressionAst} from "../expression";
 
 export type DependenceValue = {
   name: string
@@ -41,7 +42,7 @@ export const getDependencies = <T extends FieldValues>(recation: Reaction<T>): D
 
 export const getDependenceWithExpression = (expression: string): ReactionDependence => {
   return {
-    dependencies: getWords(expression),
+    dependencies: getExpressionAst(expression),
     expression: expression,
   }
 }
