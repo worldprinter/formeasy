@@ -1,7 +1,6 @@
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useForm} from '@worldprinter/formeasy'
 import {z} from 'zod'
-import {getExpressionAst} from "../../../../libs/formeasy/src/expression";
 
 const schema = z.object({
   name: z.string().nonempty(),
