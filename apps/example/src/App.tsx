@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {Field, FormikProvider, useFormik} from '../../../libs/formeasy/src'
-import {Logic} from './components/Logic'
+import {Field, FormikProvider, useFormik} from '@worldprinter/formeasy'
+import {Logic} from '@worldprinter/formeasy'
 
 function Test(props: Record<string, unknown>) {
   // console.log(props)
