@@ -1,6 +1,6 @@
 {
   "name": "@worldprinter/formeasy",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": false,
   "description": "A simple form library for React",
   "repository": {
