@@ -1,4 +1,6 @@
+import { diff } from 'deep-object-diff'
 import deepmerge from 'deepmerge'
+import { cloneDeep, get, has } from 'lodash'
 import isPlainObject from 'lodash/isPlainObject'
 import * as React from 'react'
 import isEqual from 'react-fast-compare'
@@ -32,7 +34,7 @@ import {
 
 const enum ChangeType {
     'SET_VALUES' = 'SET_VALUES',
-    'ON_CHNAGE' = 'ON_CHNAGE',
+    'ON_CHANGE' = 'ON_CHANGE',
 }
 
 type FormikMessage<Values> =
@@ -41,8 +43,8 @@ type FormikMessage<Values> =
     | { type: 'SUBMIT_SUCCESS' }
     | { type: 'SET_ISVALIDATING'; payload: boolean }
     | { type: 'SET_ISSUBMITTING'; payload: boolean }
-    | { type: 'SET_VALUES'; payload: Values }
-    | { type: 'SET_FIELD_VALUE'; payload: { field: string; value?: any } }
+    | { type: 'SET_VALUES'; payload: Values; watch?: FormikConfig<Values>['watch'] }
+    | { type: 'SET_FIELD_VALUE'; payload: { field: string; value?: any; watch?: FormikConfig<Values>['watch'] } }
     | { type: 'SET_FIELD_TOUCHED'; payload: { field: string; value?: boolean } }
     | { type: 'SET_FIELD_ERROR'; payload: { field: string; value?: string } }
     | { type: 'SET_TOUCHED'; payload: FormikTouched<Values> }
@@ -57,16 +59,33 @@ type FormikMessage<Values> =
           payload: FormikState<Values>
       }
 
-function beforeChange<Values>(type: ChangeType, originValue: Values, afterValue: Values) {
-    console.log('beforeChange', type, originValue, afterValue)
+function beforeChange<Values>(
+    type: ChangeType,
+    originValue: Values,
+    afterValue: Values,
+    watch?: FormikConfig<Values>['watch'],
+) {
+    if (!watch) {
+        return afterValue
+    }
+    const newValue = cloneDeep(afterValue)
+    // @ts-ignore
+    const differences = diff(originValue, afterValue)
+    for (const key in differences) {
+        if (has(watch, key)) {
+            const fn = get(watch, key)
+            // @ts-ignore
+            fn(newValue[key], newValue)
+        }
+    }
+    return newValue
 }
 
 // State reducer
 function formikReducer<Values>(state: FormikState<Values>, msg: FormikMessage<Values>) {
     switch (msg.type) {
         case 'SET_VALUES':
-            beforeChange(ChangeType.SET_VALUES, state.values, msg.payload)
-            return { ...state, values: msg.payload }
+            return { ...state, values: beforeChange(ChangeType.SET_VALUES, state.values, msg.payload, msg.watch) }
         case 'SET_TOUCHED':
             return { ...state, touched: msg.payload }
         case 'SET_ERRORS':
@@ -84,10 +103,9 @@ function formikReducer<Values>(state: FormikState<Values>, msg: FormikMessage<Va
         case 'SET_FIELD_VALUE':
             // eslint-disable-next-line
             const newValues: Values = setIn(state.values, msg.payload.field, msg.payload.value)
-            beforeChange(ChangeType.ON_CHNAGE, state.values, newValues)
             return {
                 ...state,
-                values: newValues,
+                values: beforeChange(ChangeType.ON_CHANGE, state.values, newValues, msg.payload.watch),
             }
         case 'SET_FIELD_TOUCHED':
             return {
@@ -144,6 +162,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
     isInitialValid,
     enableReinitialize = false,
     onSubmit,
+    watch,
     ...rest
 }: FormikConfig<Values>) {
     const props = {
@@ -504,7 +523,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
     const setValues = useEventCallback((values: React.SetStateAction<Values>, shouldValidate?: boolean) => {
         const resolvedValues = isFunction(values) ? values(state.values) : values
 
-        dispatch({ type: 'SET_VALUES', payload: resolvedValues })
+        dispatch({ type: 'SET_VALUES', payload: resolvedValues, watch })
         const willValidate = shouldValidate === undefined ? validateOnChange : shouldValidate
         return willValidate ? validateFormWithHighPriority(resolvedValues) : Promise.resolve()
     })
@@ -522,6 +541,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
             payload: {
                 field,
                 value,
+                watch,
             },
         })
         const willValidate = shouldValidate === undefined ? validateOnChange : shouldValidate
