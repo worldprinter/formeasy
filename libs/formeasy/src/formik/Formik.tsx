@@ -818,7 +818,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
     )
 
     const getFieldProps = React.useCallback(
-        (nameOrOptions): FieldInputProps<any> => {
+        (nameOrOptions: any): FieldInputProps<any> => {
             const isAnObject = isObject(nameOrOptions)
             const name = isAnObject ? nameOrOptions.name : nameOrOptions
             const valueState = getIn(state.values, name)
@@ -1037,6 +1037,7 @@ function arrayMerge(target: any[], source: any[], options: any): any[] {
         if (typeof destination[i] === 'undefined') {
             const cloneRequested = options.clone !== false
             const shouldClone = cloneRequested && options.isMergeableObject(e)
+            // @ts-ignore
             destination[i] = shouldClone ? deepmerge(Array.isArray(e) ? [] : {}, e, options) : e
         } else if (options.isMergeableObject(e)) {
             destination[i] = deepmerge(target[i], e, options)
