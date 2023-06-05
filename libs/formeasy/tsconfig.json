@@ -8,7 +8,7 @@
         "types": ["vitest"]
     },
     "files": [],
-    "include": [],
+    "include": ["globals.d.ts"],
     "references": [
         {
             "path": "./tsconfig.lib.json"

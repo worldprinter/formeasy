@@ -16,7 +16,8 @@
         "baseUrl": ".",
         "paths": {
             "@worldprinter/formeasy": ["libs/formeasy/src/index.ts"]
-        }
+        },
+        "esModuleInterop": true
     },
     "exclude": ["node_modules", "tmp"]
 }

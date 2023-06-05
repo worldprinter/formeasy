@@ -19,6 +19,9 @@ export default defineConfig({
 
     plugins: [
         react(),
+        // viteTsConfigPaths({
+        //     root: '../../',
+        // }),
         viteTsConfigPaths({
             root: '../../',
         }),
@@ -26,11 +29,11 @@ export default defineConfig({
 
     // Uncomment this if you are using workers.
     // worker: {
-    //  plugins: [
-    //    viteTsConfigPaths({
-    //      root: '../../',
-    //    }),
-    //  ],
+    //     plugins: [
+    //         viteTsConfigPaths({
+    //             root: '../../',
+    //         }),
+    //     ],
     // },
 
     test: {

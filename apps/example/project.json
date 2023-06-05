@@ -9,7 +9,13 @@
             "outputs": ["{options.outputPath}"],
             "defaultConfiguration": "production",
             "options": {
-                "outputPath": "dist/apps/example"
+                "outputPath": "dist/apps/example",
+                "transformers": [
+                    {
+                        "name": "typescript-transform-paths/nx-transformer",
+                        "options": { "afterDeclarations": true }
+                    }
+                ]
             },
             "configurations": {
                 "development": {
