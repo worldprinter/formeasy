@@ -218,7 +218,8 @@ export function useFormik<Values extends FormikValues = FormikValues>({
                     // use loose null check here on purpose
                     resolve(emptyErrors)
                 } else if (isPromise(maybePromisedErrors)) {
-                    ;(maybePromisedErrors as Promise<any>).then(
+                    const temp = maybePromisedErrors as Promise<any>
+                    temp.then(
                         (errors) => {
                             resolve(errors || emptyErrors)
                         },
@@ -562,7 +563,8 @@ export function useFormik<Values extends FormikValues = FormikValues>({
                 // If we can, persist the event
                 // @see https://reactjs.org/docs/events.html#event-pooling
                 if ((eventOrTextValue as any).persist) {
-                    ;(eventOrTextValue as React.ChangeEvent<any>).persist()
+                    const temp = eventOrTextValue as React.ChangeEvent<any>
+                    temp.persist()
                 }
                 const target = eventOrTextValue.target
                     ? (eventOrTextValue as React.ChangeEvent<any>).target
@@ -693,6 +695,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
                 // If there are errors, throw em. Otherwise, wrap executeSubmit in a promise and handle
                 // cleanup of isSubmitting on behalf of the consumer.
                 let promiseOrUndefined
+                // eslint-disable-next-line no-useless-catch
                 try {
                     promiseOrUndefined = executeSubmit()
                     // Bail if it's sync, consumer is responsible for cleaning up

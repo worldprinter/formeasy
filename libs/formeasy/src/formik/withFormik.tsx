@@ -86,7 +86,7 @@ export function withFormik<OuterProps extends object, Values extends FormikValue
     mapPropsToValues = (vanillaProps: OuterProps): Values => {
         const val: Values = {} as Values
         for (const k in vanillaProps) {
-            if (vanillaProps.hasOwnProperty(k) && typeof vanillaProps[k] !== 'function') {
+            if (Object.prototype.hasOwnProperty.call(vanillaProps, k) && typeof vanillaProps[k] !== 'function') {
                 // @todo TypeScript fix
                 ;(val as any)[k] = vanillaProps[k]
             }
@@ -103,6 +103,7 @@ export function withFormik<OuterProps extends object, Values extends FormikValue
             Component.name ||
             (Component.constructor && Component.constructor.name) ||
             'Component'
+
         /**
          * We need to use closures here for to provide the wrapped component's props to
          * the respective withFormik config methods.
@@ -140,7 +141,8 @@ export function withFormik<OuterProps extends object, Values extends FormikValue
             }
 
             render() {
-                const { children, ...props } = this.props as any
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { children: _children, ...props } = this.props as any
                 return (
                     <Formik
                         {...props}

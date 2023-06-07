@@ -5,10 +5,10 @@
         "esModuleInterop": false,
         "allowSyntheticDefaultImports": true,
         "strict": true,
-        "types": ["vitest"]
+        "jsxImportSource": "@emotion/react"
     },
     "files": [],
-    "include": ["globals.d.ts"],
+    "include": [],
     "references": [
         {
             "path": "./tsconfig.lib.json"

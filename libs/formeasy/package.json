@@ -1,32 +1,4 @@
 {
-  "name": "@worldprinter/formeasy",
-  "version": "0.1.0",
-  "private": false,
-  "description": "A simple form library for React",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/worldprinter/formeasy.git",
-    "directory": "libs/formeasy"
-  },
-  "keywords": [
-    "react",
-    "library",
-    "frontend",
-    "hook-form",
-    "form",
-    "form-validation",
-    "form-validation-library"
-  ],
-  "author": "Worldprinter <worldprinter@qingmu.me>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/worldprinter/formeasy/issues"
-  },
-  "homepage": "https://github.com/worldprinter/formeasy",
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "type-fest": "^3.11.0"
-  }
+    "name": "@worldprinter/formeasy",
+    "version": "0.0.1"
 }
