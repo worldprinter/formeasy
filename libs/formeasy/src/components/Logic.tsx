@@ -7,8 +7,8 @@ import { useField, useFormikContext } from '../formik'
 
 export type LogicFieldProps<T> = {
     exp: string
-    expTrue: Partial<T>
-    expFalse: Partial<T>
+    expTrue?: Partial<T>
+    expFalse?: Partial<T>
 } & FieldAttributes<T>
 
 export const Logic = React.memo(function LogicField<T>(props: React.PropsWithChildren<LogicFieldProps<T>>) {
@@ -32,9 +32,9 @@ export const Logic = React.memo(function LogicField<T>(props: React.PropsWithChi
         })
 
         if (result) {
-            setLogicProps({ ...hookProps, ...expTrue } as FieldAttributes<T>)
+            setLogicProps({ ...hookProps, ...(expTrue || {}) } as FieldAttributes<T>)
         } else {
-            setLogicProps({ ...hookProps, ...expFalse } as FieldAttributes<T>)
+            setLogicProps({ ...hookProps, ...(expFalse || {}) } as FieldAttributes<T>)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exp, expFalse, expTrue, form, hookProps])
