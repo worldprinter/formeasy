@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/worldprinter/formeasy/compare/v0.1.0...v0.2.0) (2023-06-08)
+
+
+### Features
+
+* update formeasy ([770b153](https://github.com/worldprinter/formeasy/commit/770b1537e6c6268fa2838469261e15dbe58d348b))
+* update new version ([2db2e31](https://github.com/worldprinter/formeasy/commit/2db2e31ba5dc10781fa54e92b986c75153c69f49))
+
+
+### Bug Fixes
+
+* 去除@emotion/react/jsx-runtime ([3f58985](https://github.com/worldprinter/formeasy/commit/3f589854da20084292f31e5499770bf1fd16c891))
+
 ## 0.1.0 (2023-06-07)
 
 
