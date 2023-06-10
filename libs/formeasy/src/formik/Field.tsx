@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash'
 import * as React from 'react'
 import invariant from 'tiny-warning'
 
@@ -10,7 +11,7 @@ import type {
     FormikProps,
     GenericFieldHTMLAttributes,
 } from './types'
-import { isEmptyChildren, isFunction, isObject } from './utils'
+import { globalObj, isEmptyChildren, isFunction, isObject } from './utils'
 
 export type FieldProps<V = any, FormValues = any> = {
     field: FieldInputProps<V>
@@ -96,7 +97,7 @@ export function useField<Val = any>(
         }
     }, [registerField, unregisterField, fieldName, validateFn])
 
-    if (__DEV__) {
+    if (globalObj.__DEV__) {
         invariant(
             formik,
             'useField() / <Field /> must be used underneath a <Formik> component or withFormik() higher order component',
@@ -128,7 +129,7 @@ export function Field({
         ...formik
     } = useFormikContext()
 
-    if (__DEV__) {
+    if (globalObj.__DEV__) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         React.useEffect(() => {
             invariant(

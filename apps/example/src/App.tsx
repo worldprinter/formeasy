@@ -1,4 +1,3 @@
-import { set } from 'lodash'
 import React from 'react'
 
 import { Field, FormikProvider, Logic, useFormik } from '@worldprinter/formeasy'
@@ -7,9 +6,6 @@ function Test(props: Record<string, unknown>) {
     console.log(props)
     return <div>123</div>
 }
-
-// window.__DEV__ = true
-set(window, '__DEV__', true)
 
 function App() {
     const formik = useFormik({

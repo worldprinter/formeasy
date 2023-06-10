@@ -161,3 +161,5 @@ export function setNestedObjectValues<T>(object: any, value: any, visited: any =
 
     return response
 }
+
+export const globalObj = ((typeof window === 'undefined' ? global : window) || {}) as any

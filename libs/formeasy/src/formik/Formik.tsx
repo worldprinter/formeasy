@@ -23,6 +23,7 @@ import type {
 import {
     getActiveElement,
     getIn,
+    globalObj,
     isEmptyChildren,
     isFunction,
     isObject,
@@ -178,7 +179,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
     const initialStatus = React.useRef(props.initialStatus)
     const isMounted = React.useRef<boolean>(false)
     const fieldRegistry = React.useRef<FieldRegistry>({})
-    if (__DEV__) {
+    if (globalObj.__DEV__) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         React.useEffect(() => {
             invariant(
@@ -573,7 +574,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
                 const { type, name, id, value, checked, outerHTML, options, multiple } = target
 
                 field = maybePath ? maybePath : name ? name : id
-                if (!field && __DEV__) {
+                if (!field && globalObj.__DEV__) {
                     warnAboutMissingIdentifier({
                         htmlContent: outerHTML,
                         documentationAnchorLink: 'handlechange-e-reactchangeeventany--void',
@@ -629,7 +630,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
             const { name, id, outerHTML } = e.target
             const field = path ? path : name ? name : id
 
-            if (!field && __DEV__) {
+            if (!field && globalObj.__DEV__) {
                 warnAboutMissingIdentifier({
                     htmlContent: outerHTML,
                     documentationAnchorLink: 'handleblur-e-any--void',
@@ -747,7 +748,7 @@ export function useFormik<Values extends FormikValues = FormikValues>({
         // specified `type` attribute during development. This mitigates
         // a common gotcha in forms with both reset and submit buttons,
         // where the dev forgets to add type="button" to the reset button.
-        if (__DEV__ && typeof document !== 'undefined') {
+        if (globalObj.__DEV__ && typeof document !== 'undefined') {
             // Safely get the active element (works with IE)
             const activeElement = getActiveElement()
             if (activeElement !== null && activeElement instanceof HTMLButtonElement) {
@@ -924,7 +925,7 @@ export function Formik<Values extends FormikValues = FormikValues, ExtraProps = 
     // This allows folks to pass a ref to <Formik />
     React.useImperativeHandle(innerRef, () => formikbag)
 
-    if (__DEV__) {
+    if (globalObj.__DEV__) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         React.useEffect(() => {
             invariant(
