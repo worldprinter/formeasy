@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.3](https://github.com/worldprinter/formeasy/compare/v0.2.2...v0.2.3) (2023-06-23)
+
+
+### Bug Fixes
+
+* fixed logic ([75dc05f](https://github.com/worldprinter/formeasy/commit/75dc05faea4b133da44e708c7b71179863497e41))
+
 ## [0.2.2](https://github.com/worldprinter/formeasy/compare/v0.2.1...v0.2.2) (2023-06-10)
 
 
